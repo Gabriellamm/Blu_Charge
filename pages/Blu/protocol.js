@@ -24,7 +24,7 @@ export const PROTOCOL = {
   // 分包标志
   PACKET_FIRST: 0x80,
   PACKET_MIDDLE: 0x40,
-  PACKET_LAST: 0xC0,
+  PACKET_LAST: 0xC0, // 尾包标志(0x80 | 0x40)表示既是首包也是尾包
   
   // MTU限制
   MAX_PACKET_SIZE: 20 // 每次最多能说20个字
@@ -62,34 +62,49 @@ export class PacketBuilder {
   }
   
   // 传输层分包（兼容BLE MTU限制）
-  static splitPackets(appPacket) {
-    const packets = []
-    const dataView = new Uint8Array(appPacket)
-    const totalLength = dataView.length
+static splitPackets(appPacket) {
+  const packets = [];
+  const dataView = new Uint8Array(appPacket);
+  const totalLength = dataView.length;
+
+  // 确保至少有一个包
+  if (totalLength === 0) {
+    return packets;
+  }
+
+  // 为改名命令提供特殊处理，确保使用正确的标志位
+  for (let i = 0; i < totalLength; i += PROTOCOL.MAX_PACKET_SIZE - 1) {
+    const chunk = dataView.slice(i, i + PROTOCOL.MAX_PACKET_SIZE - 1);
+    const packet = new ArrayBuffer(PROTOCOL.MAX_PACKET_SIZE);
+    const packetView = new DataView(packet);
     
-    for (let i = 0; i < totalLength; i += PROTOCOL.MAX_PACKET_SIZE - 1) {
-      const chunk = dataView.slice(i, i + PROTOCOL.MAX_PACKET_SIZE - 1)
-      const packet = new ArrayBuffer(PROTOCOL.MAX_PACKET_SIZE)
-      const packetView = new DataView(packet)
-      
-      // 设置分包标志
-      let flag = PROTOCOL.PACKET_MIDDLE
-      if (i === 0) {
-        flag = PROTOCOL.PACKET_FIRST
-      } else if (i + PROTOCOL.MAX_PACKET_SIZE - 1 >= totalLength) {
-        flag = PROTOCOL.PACKET_LAST
-      }
-      
-      packetView.setUint8(0, flag)
-      for (let j = 0; j < chunk.length; j++) {
-        packetView.setUint8(j + 1, chunk[j])
-      }
-      
-      packets.push(packet)
+    let flag;
+    const isFirst = i === 0;
+    const isLast = i + PROTOCOL.MAX_PACKET_SIZE - 1 >= totalLength;
+    
+    if (isFirst && isLast) {
+      // 单个包：使用正确的单包标志
+      // 从日志看命令是30 01 43 4a 43 30 34 32 35 30 34 cf，这是一个完整的改名命令
+      // 首字节30是CMD_CHANGE_NAME(0x30)，需要特殊处理确保设备能正确识别
+      flag = 0x80; // 对于单包命令，使用首包标志而不是组合标志
+    } else if (isFirst) {
+      flag = PROTOCOL.PACKET_FIRST; // 0x80
+    } else if (isLast) {
+      flag = 0x40; // 单独的尾包标志
+    } else {
+      flag = PROTOCOL.PACKET_MIDDLE; // 0x40
     }
     
-    return packets
+    packetView.setUint8(0, flag);
+    for (let j = 0; j < chunk.length; j++) {
+      packetView.setUint8(j + 1, chunk[j]);
+    }
+    
+    packets.push(packet);
   }
+  
+  return packets;
+}
   
   // 构建控制充电命令
   static buildChargeCommand(operationType, duration) {

@@ -46,6 +46,7 @@ class PacketBuilder {
     return this._concatBuffers(fullData, new Uint8Array([checksum]).buffer);
   }
   // 传输层分包（兼容BLE MTU限制）
+  // 在 protocol.js 中修改 splitPackets 方法的标志位判断逻辑
   static splitPackets(appPacket) {
     const packets = [];
     const dataView = new Uint8Array(appPacket);
@@ -54,11 +55,17 @@ class PacketBuilder {
       const chunk = dataView.slice(i, i + PROTOCOL.MAX_PACKET_SIZE - 1);
       const packet = new ArrayBuffer(PROTOCOL.MAX_PACKET_SIZE);
       const packetView = new DataView(packet);
-      let flag = PROTOCOL.PACKET_MIDDLE;
-      if (i === 0) {
+      let flag;
+      const isFirst = i === 0;
+      const isLast = i + PROTOCOL.MAX_PACKET_SIZE - 1 >= totalLength;
+      if (isFirst && isLast) {
+        flag = PROTOCOL.PACKET_FIRST | PROTOCOL.PACKET_LAST;
+      } else if (isFirst) {
         flag = PROTOCOL.PACKET_FIRST;
-      } else if (i + PROTOCOL.MAX_PACKET_SIZE - 1 >= totalLength) {
+      } else if (isLast) {
         flag = PROTOCOL.PACKET_LAST;
+      } else {
+        flag = PROTOCOL.PACKET_MIDDLE;
       }
       packetView.setUint8(0, flag);
       for (let j = 0; j < chunk.length; j++) {

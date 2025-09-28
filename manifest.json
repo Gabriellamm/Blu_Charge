@@ -17,7 +17,11 @@
             "delay" : 0
         },
         /* 模块配置 */
-        "modules" : {},
+        "modules" : {
+            "Bluetooth" : {},
+            "Barcode" : {},
+            "Camera" : {}
+        },
         /* 应用发布信息 */
         "distribute" : {
             /* android打包配置 */
@@ -37,11 +41,32 @@
                     "<uses-permission android:name=\"android.permission.WAKE_LOCK\"/>",
                     "<uses-permission android:name=\"android.permission.FLASHLIGHT\"/>",
                     "<uses-feature android:name=\"android.hardware.camera\"/>",
-                    "<uses-permission android:name=\"android.permission.WRITE_SETTINGS\"/>"
+                    "<uses-permission android:name=\"android.permission.WRITE_SETTINGS\"/>",
+                    
+                    "<uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\" />",
+                    "<uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\" />",
+                    "<uses-permission android:name=\"android.permission.BLUETOOTH_ADMIN\" />",
+                    "<uses-permission android:name=\"android.permission.BLUETOOTH\" />",
+                    "<uses-permission android:name=\"android.permission.BLUETOOTH_SCAN\" />",
+					
+					
+					
+					// 地图
+					"<uses-permission android:name=\"android.permission.INTERNET\" />",
+					"<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\" />",
+					"<uses-permission android:name=\"android.permission.ACCESS_LOCATION_EXTRA_COMMANDS\" />"
+
+					
+
                 ]
             },
             /* ios打包配置 */
-            "ios" : {},
+            "ios" : {
+                "permissions" : {
+                    "NSBluetoothAlwaysUsageDescription" : "需要蓝牙权限以连接和控制外部设备",
+                    "NSBluetoothPeripheralUsageDescription" : "需要蓝牙权限以连接和控制外部设备"
+                }
+            },
             /* SDK配置 */
             "sdkConfigs" : {}
         }
@@ -54,13 +79,12 @@
         "setting" : {
             "urlCheck" : false
         },
-		 "permission": {
-		      "scope.userLocation": {
-		        "desc": "需要获取您的地理位置用于蓝牙设备扫描"
-		      }
-		    },
-		"requiredPrivateInfos": ["getLocation"],
-		  
+        "permission" : {
+            "scope.userLocation" : {
+                "desc" : "需要获取您的地理位置用于蓝牙设备扫描"
+            }
+        },
+        "requiredPrivateInfos" : [ "getLocation" ],
         "usingComponents" : true
     },
     "mp-alipay" : {

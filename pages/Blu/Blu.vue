@@ -137,26 +137,6 @@ import { otaManager } from './ota-upgrade.js'
 export default {
   data() {
     return {
-		      // // 蓝牙状态
-		      // bluetoothAvailable: false,
-		      // bluetoothState: '未初始化',
-		      // scanning: false,
-		      // connected: false,
-		      // connectedDevice: null,
-		      
-		      // // 设备状态
-		      // devices: [],
-		      // chargeStatus: '未充电',
-		      // remainingTime: 0,
-		      // charging: false,
-		      
-		      // // 蓝牙特征值
-		      // serviceId: '',
-		      // notifyCharId: '',
-		      // writeCharId: '',
-		      
-		      // // 调试
-		      // logs: [],
 			  
       // 原有的蓝牙状态
       bluetoothAvailable: false,
@@ -644,8 +624,15 @@ export default {
         // 工具函数
         addLog(message) {
           const timestamp = new Date().toLocaleTimeString()
-          this.logs.unshift(`[${timestamp}] ${message}`)
-          if (this.logs.length > 50) this.logs.pop()
+          const logMessage = `[${timestamp}] ${message}`
+          // 添加到日志数组
+          this.logs.unshift(logMessage)
+          // 同步输出到 HBuilderX 控制台
+          console.log(logMessage)
+          // 限制日志最大长度
+          if (this.logs.length > 50) {
+            this.logs.pop()
+          }
         },
     
         clearLogs() {

@@ -1,0 +1,159 @@
+
+/* 保留原有的所有样式 */
+.container.data-v-3621e184 {
+  padding: 20rpx;
+  min-height: 100vh;
+}
+.card.data-v-3621e184 {
+  background: white;
+  border-radius: 15rpx;
+  padding: 30rpx;
+  margin: 20rpx 0;
+  box-shadow: 0 2rpx 10rpx rgba(0,0,0,0.1);
+}
+.title.data-v-3621e184 {
+  font-size: 36rpx;
+  font-weight: bold;
+  margin-bottom: 20rpx;
+  display: block;
+  color: #333;
+}
+.status-line.data-v-3621e184 {
+  display: flex;
+  justify-content: space-between;
+  padding: 15rpx 0;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+.copyable.data-v-3621e184 {
+  color: #007AFF;
+  text-decoration: underline;
+  -webkit-text-decoration-style: dotted;
+          text-decoration-style: dotted;
+}
+.status-line.data-v-3621e184:last-child {
+  border-bottom: none;
+}
+.device-item.data-v-3621e184 {
+  background: #f8f9fa;
+  border-radius: 10rpx;
+  padding: 25rpx;
+  margin: 15rpx 0;
+  border-left: 8rpx solid #007AFF;
+}
+.device-name.data-v-3621e184 {
+  font-size: 32rpx;
+  font-weight: bold;
+  display: block;
+  color: #007AFF;
+}
+.device-info.data-v-3621e184 {
+  font-size: 24rpx;
+  color: #666;
+  display: block;
+  margin-top: 8rpx;
+}
+.control-row.data-v-3621e184 {
+  display: flex;
+  gap: 20rpx;
+  margin: 20rpx 0;
+}
+.btn.data-v-3621e184 {
+  flex: 1;
+  background: #007AFF;
+  color: white;
+  border-radius: 10rpx;
+  padding: 20rpx;
+  text-align: center;
+  font-size: 28rpx;
+  border: none;
+}
+.btn.data-v-3621e184:active {
+  background: #0056CC;
+}
+.btn.data-v-3621e184:disabled {
+  background: #CCCCCC;
+  color: #666666;
+}
+.btn-active.data-v-3621e184 {
+  background: #34C759;
+}
+.btn-secondary.data-v-3621e184 {
+  background: #FF9500;
+}
+.btn-danger.data-v-3621e184 {
+  background: #FF3B30;
+}
+.btn-small.data-v-3621e184 {
+  padding: 15rpx;
+  font-size: 24rpx;
+}
+.log-container.data-v-3621e184 {
+  max-height: 300rpx;
+  background: #f8f8f8;
+  border-radius: 10rpx;
+  padding: 20rpx;
+  margin-bottom: 20rpx;
+}
+.log-item.data-v-3621e184 {
+  font-size: 22rpx;
+  font-family: 'Courier New', monospace;
+  display: block;
+  margin: 5rpx 0;
+  color: #333;
+  line-height: 1.4;
+}
+
+/* ✅ 新增：OTA相关样式 */
+.version-info.data-v-3621e184 {
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+.version-info text.data-v-3621e184 {
+  display: block;
+  margin: 10rpx 0;
+  font-size: 28rpx;
+}
+.update-available.data-v-3621e184 {
+  color: #FF9500;
+  font-weight: bold;
+}
+.update-tip.data-v-3621e184 {
+  color: #34C759;
+  font-size: 24rpx;
+}
+.upgrade-progress.data-v-3621e184 {
+  padding: 30rpx 0;
+  text-align: center;
+}
+.upgrade-progress text.data-v-3621e184 {
+  display: block;
+  margin: 10rpx 0;
+  font-size: 26rpx;
+}
+.ota-controls.data-v-3621e184 {
+  display: flex;
+  gap: 20rpx;
+  margin: 30rpx 0;
+}
+.ota-status.data-v-3621e184 {
+  text-align: center;
+  padding: 20rpx 0;
+}
+.upgrading.data-v-3621e184 {
+  color: #007AFF;
+  font-weight: bold;
+}
+.success.data-v-3621e184 {
+  color: #34C759;
+  font-weight: bold;
+}
+.failed.data-v-3621e184 {
+  color: #FF3B30;
+  font-weight: bold;
+}
+
+/* 进度条样式调整 */
+progress.data-v-3621e184 {
+  width: 100%;
+  margin: 20rpx 0;
+}
